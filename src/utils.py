@@ -8,7 +8,7 @@ from src.api_module import EMPLOYER_IDS, insert_employers, insert_vacancies
 load_dotenv()
 
 
-def create_db(self_dict, dbname):
+def create_db(self_dict: dict, dbname: str) -> None:
     """ Функция принимает словарь с параметрами для подключения к базе данных и имя базы данных.
     Создает базу данных с использованием полученных параметров """
 
@@ -21,9 +21,9 @@ def create_db(self_dict, dbname):
     conn.close()
 
 
-def create_tables(self_dict, dbname):
+def create_tables(self_dict: dict, dbname: str) -> None:
     """ Функция принимает словарь с параметрами для подключения к базе данных и имя базы данных.
-    Создает таблицы и заполняет их данными """
+    Создает таблицы базы данных """
 
     conn = psycopg2.connect(**self_dict, database=dbname)
     cur = conn.cursor()
@@ -43,7 +43,8 @@ def create_tables(self_dict, dbname):
     conn.close()
 
 
-def load_employers_to_db(data_list, self_dict):
+def load_employers_to_db(data_list: list, self_dict: dict) -> None:
+    """ Функция загружает данные о работодателях в базу данных PostgresQL в таблицу employers """
     conn = psycopg2.connect(**self_dict, database='hh_info')
     conn.autocommit = True
     with conn.cursor() as cursor:
@@ -57,7 +58,8 @@ def load_employers_to_db(data_list, self_dict):
     conn.close()
 
 
-def load_vacancies_to_db(data_list, self_dict):
+def load_vacancies_to_db(data_list: list, self_dict: dict) -> None:
+    """ Функция загружает данные о вакансиях в базу данных PostgresQL в таблицу vacancies """
     conn = psycopg2.connect(**self_dict, database='hh_info')
     conn.autocommit = True
     with conn.cursor() as cursor:

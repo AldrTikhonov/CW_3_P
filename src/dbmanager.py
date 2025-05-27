@@ -7,13 +7,13 @@ load_dotenv()
 
 
 class DBManager:
-    """ """
+    """ Класс для работы с базой данных PostgresQL, содержащей информацию о работодателях и вакансиях"""
 
-    def __init__(self, dict_data):
+    def __init__(self, dict_data: dict):
 
         self.conn = psycopg2.connect(**dict_data, database='hh_info')
 
-    def get_companies_and_vacancies_count(self):
+    def get_companies_and_vacancies_count(self) -> None:
         """ Получает список всех компаний и количество вакансий у каждой компании """
         with self.conn.cursor() as cur:
 
@@ -29,7 +29,7 @@ class DBManager:
 
         self.conn.close()
 
-    def get_all_vacancies(self):
+    def get_all_vacancies(self) -> None:
         """ Получает список всех вакансий с указанием названия компании, названия вакансии,
          зарплаты и ссылки на вакансию """
         with self.conn.cursor() as cur:
@@ -50,7 +50,7 @@ class DBManager:
 
         self.conn.close()
 
-    def get_avg_salary(self):
+    def get_avg_salary(self) -> None:
         """ Получает среднюю зарплату по вакансиям """
         with self.conn.cursor() as cur:
 
@@ -62,7 +62,7 @@ class DBManager:
 
         self.conn.close()
 
-    def get_vacancies_with_higher_salary(self):
+    def get_vacancies_with_higher_salary(self) -> None:
         """ Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям """
 
         with self.conn.cursor() as cur:
@@ -74,7 +74,7 @@ class DBManager:
 
         self.conn.close()
 
-    def get_vacancies_with_keyword(self, search_word):
+    def get_vacancies_with_keyword(self, search_word: str) -> None:
         """ Получает список всех вакансий, в названии которых содержатся переданные в метод слова, например python """
         with self.conn.cursor() as cur:
             cur.execute("SELECT * FROM vacancies WHERE vacancies_name ILIKE '%" + search_word + "%'")

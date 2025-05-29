@@ -1,9 +1,6 @@
-import os
-
 import psycopg2
 from dotenv import load_dotenv
 
-from src.api_module import EMPLOYER_IDS, insert_employers, insert_vacancies
 
 load_dotenv()
 
@@ -71,31 +68,4 @@ def load_vacancies_to_db(data_list: list, self_dict: dict) -> None:
                             data['salary'],
                             data['employers_id']))
 
-    conn.close()
-
-
-if __name__ == '__main__':
-    dict_data = {
-        'host': os.getenv('host'),
-        'user':  os.getenv('user'),
-        'password': os.getenv('password'),
-        'port': os.getenv('port')
-    }
-
-    create_db(dict_data, 'hh_info')
-    create_tables(dict_data, 'hh_info')
-
-    data_list = insert_employers(EMPLOYER_IDS)
-    data_list_1 = insert_vacancies(EMPLOYER_IDS)
-    load_employers_to_db(data_list, dict_data)
-    load_vacancies_to_db(data_list_1, dict_data)
-
-    conn = psycopg2.connect(**dict_data, database='hh_info')
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM employers")
-    print(cur.fetchall())
-    cur.execute("SELECT * FROM vacancies")
-    print(cur.fetchall())
-
-    cur.close()
     conn.close()

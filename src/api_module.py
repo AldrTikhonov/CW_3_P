@@ -1,5 +1,3 @@
-import os
-
 import requests
 from dotenv import load_dotenv
 
@@ -74,16 +72,3 @@ def insert_vacancies(employers_list: list) -> list[dict]:
             result_list.append(vacancies_dict)
 
     return result_list
-
-
-if __name__ == "__main__":
-    dict_data = {
-        'host': os.getenv('host'),
-        'user': os.getenv('user'),
-        'password': os.getenv('password'),
-        'port': os.getenv('port')
-    }
-
-    data_list = insert_employers(EMPLOYER_IDS)
-    insert_vacancies(EMPLOYER_IDS)
-    # load_employers_to_db(data_list, dict_data)
